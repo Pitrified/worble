@@ -1,6 +1,5 @@
+class_name Keyboard
 extends Node
-
-@export var kb_btn_scene: PackedScene
 
 # define the keyboard letters, organized in rows
 const KB_LETTERS = [
@@ -9,7 +8,10 @@ const KB_LETTERS = [
 	['.', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'enter']
 ]
 
+signal keyboard_input(content: String)
+
 func build_keyboard():
+	print('building keyboard')
 	var btn_x_start = 100
 	var position_ = Vector2(btn_x_start, 50)
 	for row in KB_LETTERS:
@@ -26,3 +28,4 @@ func _ready():
 
 func _on_kb_button_kb_button_down(content: String):
 	print('board: Button pressed: ' + content)
+	emit_signal('keyboard_input', content)

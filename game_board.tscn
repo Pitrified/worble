@@ -29,3 +29,5 @@ offset_right = 400.0
 offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[connection signal="keyboard_input" from="Keyboard" to="." method="_on_keyboard_keyboard_input"]

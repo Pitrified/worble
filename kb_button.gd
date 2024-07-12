@@ -37,6 +37,7 @@ func _ready():
 
 func _on_button_down():
 	# print a message to the console
+	print()
 	print('kb_btn: Button pressed: ' + btn_content)
 	# # disable the button
 	# self.disabled = true
