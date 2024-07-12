@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvr8v5jcnh7gu"]
+
+[ext_resource type="Script" path="res://kb_button.gd" id="1_iomye"]
+
+[node name="KbButton" type="Button"]
+offset_right = 48.0
+offset_bottom = 48.0
+text = "A"
+script = ExtResource("1_iomye")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]

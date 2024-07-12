@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp0k6ixf78rc6"]
+
+[ext_resource type="Script" path="res://board.gd" id="1_j5c3j"]
+[ext_resource type="PackedScene" uid="uid://dvr8v5jcnh7gu" path="res://kb_button.tscn" id="2_xe023"]
+
+[node name="Board" type="Node"]
+script = ExtResource("1_j5c3j")
+kb_btn_scene = ExtResource("2_xe023")
