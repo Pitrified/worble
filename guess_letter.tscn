@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://mv0cxwmtdumx"]
+
+[ext_resource type="Script" path="res://guess_letter.gd" id="1_klx2s"]
+
+[node name="GuessLetter" type="Button"]
+custom_minimum_size = Vector2(48, 48)
+offset_right = 48.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 28
+text = "_"
+script = ExtResource("1_klx2s")

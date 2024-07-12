@@ -3,6 +3,8 @@
 [ext_resource type="Script" path="res://keyboard.gd" id="1_j5c3j"]
 [ext_resource type="PackedScene" uid="uid://dvr8v5jcnh7gu" path="res://kb_button.tscn" id="2_xe023"]
 
-[node name="Keyboard" type="Node"]
+[node name="Keyboard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_j5c3j")
 kb_btn_scene = ExtResource("2_xe023")
