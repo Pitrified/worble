@@ -12,6 +12,7 @@ var btn_content: String = ''
 # a map to show the user a different character for some keys
 const SHOW_CHARS = {
 	'enter': '↵',
+	'backspace': '⌫',
 	'.': '.',
 }
 
