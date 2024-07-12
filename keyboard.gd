@@ -10,17 +10,15 @@ const KB_LETTERS = [
 ]
 
 func build_keyboard():
-	var x = 100
-	var position_ = Vector2(x, 50)
+	var btn_x_start = 100
+	var position_ = Vector2(btn_x_start, 50)
 	for row in KB_LETTERS:
 		for letter in row:
-			var kb_btn = KbButton.new_kb_button(letter, position_)
-			# connect the signal
-			kb_btn.connect('kb_button_down', _on_kb_button_kb_button_down)
+			var kb_btn = KbButton.new_kb_button(letter, position_, _on_kb_button_kb_button_down)
 			add_child(kb_btn)
 			position_.x += 50
 		position_.y += 50
-		position_.x = x
+		position_.x = btn_x_start
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

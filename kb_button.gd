@@ -18,7 +18,7 @@ const SHOW_CHARS = {
 
 # kinda constructor
 # https://www.reddit.com/r/godot/comments/13pm5o5/instantiating_a_scene_with_constructor_parameters/
-static func new_kb_button(content: String, position_: Vector2) -> KbButton:
+static func new_kb_button(content: String, position_: Vector2, _on_kb_button_down: Callable) -> KbButton:
 	# var my_scene: PackedScene = load('res://kb_button.tscn')
 	var kb_btn: KbButton = my_scene.instantiate()
 	# set the button content
@@ -27,8 +27,8 @@ static func new_kb_button(content: String, position_: Vector2) -> KbButton:
 	kb_btn.text = SHOW_CHARS.get(content, content)
 	# set the button position
 	kb_btn.position = position_
-	# # connect the signal to the receiver method
-	# kb_btn.connect('kb_button_down', _on_button_down)
+	# connect the signal to the receiver method
+	kb_btn.connect('kb_button_down', _on_kb_button_down)
 	return kb_btn
 
 # Called when the node enters the scene tree for the first time.
