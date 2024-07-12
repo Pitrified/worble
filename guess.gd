@@ -75,7 +75,7 @@ func check_guess(secret_word: String) -> String:
 		print('guess: still empty slots')
 		return 'more_empty_slots'
 	# check that the guess word is the same as the secret word
-	print('guess: guess word: ' + word)
+	print('guess: guess word: ' + word, ' secret word: ' + secret_word)
 	update_colors(secret_word)
 	if word == secret_word:
 		print('guesses: You win!')
@@ -85,7 +85,7 @@ func check_guess(secret_word: String) -> String:
 		return 'try_again'
 
 func update_colors(secret_word: String):
-	# FIXME first check all the correct letters and remove them, then check the present
+	# first check all the correct letters and remove them
 	for i in range(0, guess_len):
 		var guessed_letter = word[i]
 		# the letter is in the right place
@@ -93,6 +93,12 @@ func update_colors(secret_word: String):
 			guess_letters[i].set_letter_state('correct')
 			secret_word[i] = '_'
 			print('guess: correct letter ', guessed_letter, ' at ', i)
+			word[i] = '_'
+
+	# then check all the present letters
+	for i in range(0, guess_len):
+		var guessed_letter = word[i]
+		if guessed_letter == '_':
 			continue
 		# the letter is in the word, but not in the right place
 		var secret_word_index = Utils.get_char_index(secret_word, guessed_letter)
