@@ -3,3 +3,7 @@
 
 # ides
 .vscode/
+
+# apk files
+*.apk
+*.apk.idsig

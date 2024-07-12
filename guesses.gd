@@ -7,7 +7,7 @@ var guesses_ls = []
 var current_guess_id = 0
 var current_guess: Guess
 
-const guesses_num = 3
+const guesses_num = 6
 
 func build_guesses():
 	var secret_word_len = secret_word.length()

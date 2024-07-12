@@ -85,6 +85,7 @@ func check_guess(secret_word: String) -> String:
 		return 'try_again'
 
 func update_colors(secret_word: String):
+	# FIXME first check all the correct letters and remove them, then check the present
 	for i in range(0, guess_len):
 		var guessed_letter = word[i]
 		# the letter is in the right place
