@@ -7,8 +7,8 @@ func _ready():
 
 func start_game():
 	# pick a random word
-	var words = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'honeydew', 'kiwi', 'lemon', 'mango', 'nectarine', 'orange', 'papaya', 'quince', 'raspberry', 'strawberry', 'tangerine', 'watermelon']
-	var word = words[randi() % words.size()]
+	var words: Array[String] = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig', 'grape', 'honeydew', 'kiwi', 'lemon', 'mango', 'nectarine', 'orange', 'papaya', 'quince', 'raspberry', 'strawberry', 'tangerine', 'watermelon']
+	var word = words[randi() % words.size()].to_upper()
 	print('game_board: The word is: ' + word)
 	# reset the guesses
 	$Guesses.start_game(word)

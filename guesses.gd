@@ -19,6 +19,25 @@ func build_guesses():
 func keyboard_input(content: String):
 	print('guesses: Button pressed: ' + content)
 	current_guess.keyboard_input(content)
+	if content == 'enter':
+		print('guesses: enter')
+		input_enter()
+
+func input_enter():
+	var outcome = current_guess.check_guess(secret_word)
+	# if the word was correct or there were empty slots, we can continue
+	if outcome != 'try_again':
+		return
+	# try to go to the next guess
+	current_guess_id += 1
+	if current_guess_id < guesses_num:
+		# TODO probably need to use a set_guess_state to also update colors and stuff
+		current_guess.guess_state = 'empty'
+		current_guess = guesses_ls[current_guess_id]
+		current_guess.guess_state = 'current'
+	else:
+		print('guesses: No more guesses')
+		# game over
 
 func start_game(word: String):
 	print('guesses: The word is: ' + word)

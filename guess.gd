@@ -36,15 +36,15 @@ func keyboard_input(content: String):
 	print('guess: Button pressed: ' + content)
 	if content == 'backspace':
 		print('guess: backspace')
-		add_backspace()
+		input_backspace()
 	elif content == 'enter':
 		print('guess: enter')
 		return
 	else:
 		print('guess: letter')
-		add_letter(content)
+		input_letter(content)
 
-func add_backspace():
+func input_backspace():
 	print('had word: ' + word)
 	if current_slot == - 1:
 		print('guess: No more backspaces')
@@ -53,7 +53,7 @@ func add_backspace():
 	guess_letters[current_slot].set_content('_')
 	current_slot -= 1
 		
-func add_letter(content: String):
+func input_letter(content: String):
 	print('had word: ' + word)
 	# find the first empty slot
 	# by clicking a guess letter, the letter is eliminated from the word
@@ -67,3 +67,19 @@ func add_letter(content: String):
 	word[current_slot] = content
 	guess_letters[current_slot].set_content(content)
 	print('new word: ' + word)
+
+func check_guess(secret_word: String) -> String:
+	# check that we have no empty slots
+	current_slot = Utils.get_char_index(word, '_')
+	if current_slot != - 1:
+		print('guess: still empty slots')
+		return 'more_empty_slots'
+	# check that the guess word is the same as the secret word
+	print('guess: guess word: ' + word)
+	if word == secret_word:
+		print('guesses: You win!')
+		# game over
+		return 'win'
+	else:
+		print('guesses: Try again')
+		return 'try_again'
