@@ -26,8 +26,11 @@ func keyboard_input(content: String):
 func input_enter():
 	var outcome = current_guess.check_guess(secret_word)
 	# if the word was correct or there were empty slots, we can continue
-	if outcome != 'try_again':
+	if outcome == 'more_empty_slots':
 		return
+	elif outcome == 'win':
+		pass
+		# game over, won
 	# try to go to the next guess
 	current_guess_id += 1
 	if current_guess_id < guesses_num:
@@ -37,7 +40,7 @@ func input_enter():
 		current_guess.guess_state = 'current'
 	else:
 		print('guesses: No more guesses')
-		# game over
+		# game over, lost
 
 func start_game(word: String):
 	print('guesses: The word is: ' + word)

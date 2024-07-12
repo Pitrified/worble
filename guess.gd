@@ -76,10 +76,30 @@ func check_guess(secret_word: String) -> String:
 		return 'more_empty_slots'
 	# check that the guess word is the same as the secret word
 	print('guess: guess word: ' + word)
+	update_colors(secret_word)
 	if word == secret_word:
 		print('guesses: You win!')
-		# game over
 		return 'win'
 	else:
 		print('guesses: Try again')
 		return 'try_again'
+
+func update_colors(secret_word: String):
+	for i in range(0, guess_len):
+		var guessed_letter = word[i]
+		# the letter is in the right place
+		if guessed_letter == secret_word[i]:
+			guess_letters[i].set_letter_state('correct')
+			secret_word[i] = '_'
+			print('guess: correct letter ', guessed_letter, ' at ', i)
+			continue
+		# the letter is in the word, but not in the right place
+		var secret_word_index = Utils.get_char_index(secret_word, guessed_letter)
+		if secret_word_index != - 1:
+			guess_letters[i].set_letter_state('present')
+			secret_word[secret_word_index] = '_'
+			print('guess: present letter ', guessed_letter, ' at ', i, ' and ', secret_word_index)
+			continue
+		# the letter is not in the word
+		guess_letters[i].set_letter_state('missing')
+		print('guess: missing letter ', guessed_letter, ' at ', i)
