@@ -9,6 +9,12 @@ signal kb_button_down(content: String)
 
 var btn_content: String = ''
 
+# a map to show the user a different character for some keys
+const SHOW_CHARS = {
+	'enter': '↵',
+	'.': '.',
+}
+
 # kinda constructor
 # https://www.reddit.com/r/godot/comments/13pm5o5/instantiating_a_scene_with_constructor_parameters/
 static func new_kb_button(content: String, position_: Vector2) -> KbButton:
@@ -17,7 +23,7 @@ static func new_kb_button(content: String, position_: Vector2) -> KbButton:
 	# set the button content
 	kb_btn.btn_content = content
 	# set the button text shown to the user
-	kb_btn.text = content
+	kb_btn.text = SHOW_CHARS.get(content, content)
 	# set the button position
 	kb_btn.position = position_
 	# # connect the signal to the receiver method
