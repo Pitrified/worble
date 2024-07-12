@@ -40,6 +40,9 @@ func keyboard_input(content: String):
 	elif content == 'enter':
 		print('guess: enter')
 		return
+	elif content == '.':
+		print('guess: dot')
+		input_letter(content)
 	else:
 		print('guess: letter')
 		input_letter(content)
@@ -59,7 +62,7 @@ func input_letter(content: String):
 	# by clicking a guess letter, the letter is eliminated from the word
 	# so we need to find the first empty slot
 	# MAYBE track the right one while removing the letter
-	current_slot = Utils.get_char_index(word, '_')
+	current_slot = word.find('_')
 	print('current_slot: ' + str(current_slot))
 	if current_slot == - 1:
 		print('guess: No more empty slots')
@@ -70,13 +73,18 @@ func input_letter(content: String):
 
 func check_guess(secret_word: String) -> String:
 	# check that we have no empty slots
-	current_slot = Utils.get_char_index(word, '_')
+	current_slot = word.find('_')
 	if current_slot != - 1:
 		print('guess: still empty slots')
 		return 'more_empty_slots'
+	# check that there are no dots in the middle of the word
+	if Words.is_word_valid_dots(word) == false:
+		print('guess: invalid word, dots in the middle')
+		return 'dots_in_word'
 	# check that the guess word is the same as the secret word
 	print('guess: guess word: ' + word, ' secret word: ' + secret_word)
 	update_colors(secret_word)
+	print('guess: guess word: ' + word, ' secret word: ' + secret_word, ' after update color')
 	if word == secret_word:
 		print('guesses: You win!')
 		return 'win'
@@ -85,23 +93,26 @@ func check_guess(secret_word: String) -> String:
 		return 'try_again'
 
 func update_colors(secret_word: String):
+	# make a copy of the guessed word
+	var guess_word = word
+
 	# first check all the correct letters and remove them
 	for i in range(0, guess_len):
-		var guessed_letter = word[i]
+		var guessed_letter = guess_word[i]
 		# the letter is in the right place
 		if guessed_letter == secret_word[i]:
 			guess_letters[i].set_letter_state('correct')
 			secret_word[i] = '_'
 			print('guess: correct letter ', guessed_letter, ' at ', i)
-			word[i] = '_'
+			guess_word[i] = '_'
 
 	# then check all the present letters
 	for i in range(0, guess_len):
-		var guessed_letter = word[i]
+		var guessed_letter = guess_word[i]
 		if guessed_letter == '_':
 			continue
 		# the letter is in the word, but not in the right place
-		var secret_word_index = Utils.get_char_index(secret_word, guessed_letter)
+		var secret_word_index = secret_word.find(guessed_letter)
 		if secret_word_index != - 1:
 			guess_letters[i].set_letter_state('present')
 			secret_word[secret_word_index] = '_'

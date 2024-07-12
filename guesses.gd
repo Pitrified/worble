@@ -25,9 +25,13 @@ func keyboard_input(content: String):
 
 func input_enter():
 	var outcome = current_guess.check_guess(secret_word)
-	# if the word was correct or there were empty slots, we can continue
+	# if there are empty slots, continue on the same guess
 	if outcome == 'more_empty_slots':
 		return
+	# if there are dots in the word, continue on the same guess
+	elif outcome == 'dots_in_word':
+		return
+	# if the word was correct, end the game
 	elif outcome == 'win':
 		pass
 		# game over, won
