@@ -1,10 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://b3rje26b5nuc3"]
+[gd_scene load_steps=2 format=3 uid="uid://b3rje26b5nuc3"]
 
 [ext_resource type="Script" path="res://guess.gd" id="1_gfjv0"]
-[ext_resource type="PackedScene" uid="uid://mv0cxwmtdumx" path="res://guess_letter.tscn" id="2_ycgjg"]
 
 [node name="Guess" type="HBoxContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("1_gfjv0")
-guess_letter_scene = ExtResource("2_ycgjg")
