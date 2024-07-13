@@ -19,9 +19,10 @@ static func new_guess(guess_len_: int):
 
 func build_guess():
 	for i in range(0, guess_len):
-		var guess_letter = guess_letter_scene.instantiate()
-		add_child(guess_letter)
-		guess_letters.append(guess_letter)
+		# var guess_letter = guess_letter_scene.instantiate()
+		var gl = GuessLetter.new_guess_letter('_', 'base', i, _on_guess_letter_pressed)
+		add_child(gl)
+		guess_letters.append(gl)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -121,3 +122,12 @@ func update_colors(secret_word: String):
 		# the letter is not in the word
 		guess_letters[i].set_letter_state('missing')
 		print('guess: missing letter ', guessed_letter, ' at ', i)
+
+func _on_guess_letter_pressed(letter_id: int):
+	print('guess: letter pressed: ' + str(letter_id))
+	if guess_state != 'current':
+		print('guess: not current, ignoring letter press')
+		return
+	# remove the letter from the word
+	word[letter_id] = '_'
+	guess_letters[letter_id].set_content('_')

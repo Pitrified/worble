@@ -9,3 +9,5 @@ offset_bottom = 48.0
 theme_override_font_sizes/font_size = 28
 text = "_"
 script = ExtResource("1_klx2s")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
