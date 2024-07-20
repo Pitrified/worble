@@ -1,5 +1,5 @@
 class_name Keyboard
-extends Node
+extends Control
 
 # define the keyboard letters, organized in rows
 const KB_LETTERS = [
@@ -8,19 +8,49 @@ const KB_LETTERS = [
 	['.', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', 'enter']
 ]
 
+var has_letters_board = false
+var letters_board = []
+var KB_LETTER_MARGIN = 10
+
 signal keyboard_input(content: String)
 
 func build_keyboard():
 	print('building keyboard')
-	var btn_x_start = 100
-	var position_ = Vector2(btn_x_start, 50)
 	for row in KB_LETTERS:
+		var letters_row = []
 		for letter in row:
-			var kb_btn = KbButton.new_kb_button(letter, position_, _on_kb_button_kb_button_down)
+			var kb_btn = KbButton.new_kb_button(letter, _on_kb_button_kb_button_down)
 			add_child(kb_btn)
-			position_.x += 50
-		position_.y += 50
-		position_.x = btn_x_start
+			letters_row.append(kb_btn)
+		letters_board.append(letters_row)
+	has_letters_board = true
+ 
+func update_keyboard():
+	print('start updating keyboard')
+	if not has_letters_board:
+		build_keyboard()
+	print('do    updating keyboard')
+	var position_ = Vector2(0, 50)
+	print('position_', position_)
+	var cur_size = get_size()
+	var width_available = cur_size.x
+	for row in letters_board:
+		var num_letters = row.size()
+		var width_available_for_letters = width_available - (num_letters - 1) * KB_LETTER_MARGIN
+		var letter_width = width_available_for_letters / num_letters
+		for letter in row:
+			letter.set_size(Vector2(letter_width, 50))
+			letter.set_position(position_)
+			position_.x += letter_width + KB_LETTER_MARGIN
+		position_.y += 50 + KB_LETTER_MARGIN
+		position_.x = 0
+	# letters_board[0][0].set_size(Vector2(50, 50))
+	# letters_board[0][0].set_position(Vector2(100, 50))
+
+# func remove_keyboard():
+# 	for letter in letters_ls:
+# 		# remove_child(letter) # is this needed?
+# 		letter.queue_free()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -29,3 +59,25 @@ func _ready():
 func _on_kb_button_kb_button_down(content: String):
 	print('board: Button pressed: ' + content)
 	emit_signal('keyboard_input', content)
+
+func _notification(what):
+	match what:
+		NOTIFICATION_MOUSE_ENTER:
+			pass # Mouse entered the area of this control.
+		NOTIFICATION_MOUSE_EXIT:
+			pass # Mouse exited the area of this control.
+		NOTIFICATION_FOCUS_ENTER:
+			pass # Control gained focus.
+		NOTIFICATION_FOCUS_EXIT:
+			pass # Control lost focus.
+		NOTIFICATION_THEME_CHANGED:
+			pass # Theme used to draw the control changed;
+			# update and redraw is recommended if using a theme.
+		NOTIFICATION_VISIBILITY_CHANGED:
+			pass # Control became visible/invisible;
+			# check new status with is_visible().
+		NOTIFICATION_RESIZED:
+			pass # Control changed size; check new size
+			# with get_size().
+			print('board: resized', get_size())
+			update_keyboard()
