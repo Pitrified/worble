@@ -35,4 +35,5 @@ offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 0
 
+[connection signal="guess_letter_outcome" from="Guesses" to="." method="_on_guesses_guess_letter_outcome"]
 [connection signal="keyboard_input" from="Keyboard" to="." method="_on_keyboard_keyboard_input"]

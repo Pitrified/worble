@@ -15,3 +15,7 @@ func start_game():
 func _on_keyboard_keyboard_input(content: String):
 	print('game_board: Button pressed: ' + content)
 	$Guesses.keyboard_input(content)
+
+func _on_guesses_guess_letter_outcome(letter: String, state: String):
+	print('game_board: guess letter outcome: ', letter, state)
+	$Keyboard.on_letter_state_update(letter, state)

@@ -9,10 +9,16 @@ var current_guess: Guess
 
 const guesses_num = 6
 
+signal guess_letter_outcome(letter: String, state: String)
+
+func on_guess_letter_outcome(letter: String, state: String):
+	print('guesses: guess letter outcome: ', letter, ' is ', state)
+	emit_signal('guess_letter_outcome', letter, state)
+
 func build_guesses():
 	var secret_word_len = secret_word.length()
 	for i in range(0, guesses_num):
-		var guess = Guess.new_guess(secret_word_len)
+		var guess = Guess.new_guess(secret_word_len, on_guess_letter_outcome)
 		add_child(guess)
 		guesses_ls.append(guess)
 

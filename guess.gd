@@ -1,7 +1,7 @@
 class_name Guess
 extends HBoxContainer
 
-const guess_letter_scene: PackedScene = preload ("res://guess_letter.tscn")
+const guess_letter_scene: PackedScene = preload("res://guess_letter.tscn")
 
 # hold the guess letters in a list
 var guess_letters = []
@@ -10,11 +10,23 @@ var guess_state = 'empty'
 var word: String
 var current_slot = -1
 
-static func new_guess(guess_len_: int):
+var on_guess_letter_outcome: Callable
+
+static func new_guess(
+	guess_len_: int,
+	on_guess_letter_outcome_: Callable
+):
 	var guess = Guess.new()
 	guess.guess_len = guess_len_
 	# build a placeholder string made of _ characters, with the same length as the word
 	guess.word = '_'.repeat(guess_len_)
+
+	# # If you need to get the path to this node
+	# var guess_node_path = guess.get_path()
+	# print("Guess node path: ", guess_node_path)
+
+	guess.on_guess_letter_outcome = on_guess_letter_outcome_
+
 	return guess
 
 func build_guess():
@@ -50,7 +62,7 @@ func keyboard_input(content: String):
 
 func input_backspace():
 	print('had word: ' + word)
-	if current_slot == - 1:
+	if current_slot == -1:
 		print('guess: No more backspaces')
 		return
 	word[current_slot] = '_'
@@ -65,7 +77,7 @@ func input_letter(content: String):
 	# MAYBE track the right one while removing the letter
 	current_slot = word.find('_')
 	print('current_slot: ' + str(current_slot))
-	if current_slot == - 1:
+	if current_slot == -1:
 		print('guess: No more empty slots')
 		return
 	word[current_slot] = content
@@ -75,7 +87,7 @@ func input_letter(content: String):
 func check_guess(secret_word: String) -> String:
 	# check that we have no empty slots
 	current_slot = word.find('_')
-	if current_slot != - 1:
+	if current_slot != -1:
 		print('guess: still empty slots')
 		return 'more_empty_slots'
 	# check that there are no dots in the middle of the word
@@ -106,6 +118,10 @@ func update_colors(secret_word: String):
 			secret_word[i] = '_'
 			print('guess: correct letter ', guessed_letter, ' at ', i)
 			guess_word[i] = '_'
+			# emit a signal that this letter is correct
+			print('guess: emitting signal outcome ', guessed_letter, ' is correct')
+			# emit_signal('guess_letter_outcome', guessed_letter, 'correct')
+			on_guess_letter_outcome.call(guessed_letter, 'correct')
 
 	# then check all the present letters
 	for i in range(0, guess_len):
@@ -114,13 +130,15 @@ func update_colors(secret_word: String):
 			continue
 		# the letter is in the word, but not in the right place
 		var secret_word_index = secret_word.find(guessed_letter)
-		if secret_word_index != - 1:
+		if secret_word_index != -1:
 			guess_letters[i].set_letter_state('present')
 			secret_word[secret_word_index] = '_'
 			print('guess: present letter ', guessed_letter, ' at ', i, ' and ', secret_word_index)
+			on_guess_letter_outcome.call(guessed_letter, 'present')
 			continue
 		# the letter is not in the word
 		guess_letters[i].set_letter_state('missing')
+		on_guess_letter_outcome.call(guessed_letter, 'missing')
 		print('guess: missing letter ', guessed_letter, ' at ', i)
 
 func _on_guess_letter_pressed(letter_id: int):

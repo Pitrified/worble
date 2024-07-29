@@ -10,6 +10,7 @@ const KB_LETTERS = [
 
 var letters_board = []
 var KB_LETTER_MARGIN = 10
+var letters_state = {}
 
 signal keyboard_input(content: String)
 
@@ -38,19 +39,25 @@ func build_keyboard():
 			# create a button for each letter
 			var kb_btn = KbButton.new_kb_button(letter, _on_kb_button_kb_button_down)
 			add_child(kb_btn)
-
 			# set the size and position of the button
 			kb_btn.set_size(Vector2(letter_width, letter_height))
 			kb_btn.set_position(position_)
+			# add the button to the row
+			letters_row.append(kb_btn)
+			# save the letter buttons as a map
+			letters_state[letter] = kb_btn
 			# move to the next position
 			position_.x += letter_width + KB_LETTER_MARGIN
-
-			letters_row.append(kb_btn)
 
 		# move to the next row
 		position_.y += letter_height + KB_LETTER_MARGIN
 		position_.x = 0
 		letters_board.append(letters_row)
+
+func on_letter_state_update(letter: String, state: String):
+	print('keyboard: updating letter state', letter, state)
+	var kb_btn = letters_state[letter]
+	kb_btn.set_btn_state(state)
  
 # func update_keyboard():
 # 	print('start updating keyboard')
@@ -81,6 +88,10 @@ func remove_keyboard():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	build_keyboard()
+	# connect the signal to the receiver method
+	print('keyboard: connecting guess_letter_outcome')
+	# connect('guess_letter_outcome', on_letter_state_update)
+	# guess_letter_outcome.connect(on_letter_state_update)
 
 func _on_kb_button_kb_button_down(content: String):
 	print('board: Button pressed: ' + content)
