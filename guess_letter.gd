@@ -1,7 +1,7 @@
 class_name GuessLetter
 extends Button
 
-const guess_letter_scene: PackedScene = preload ("res://guess_letter.tscn")
+const guess_letter_scene: PackedScene = preload("res://guess_letter.tscn")
 
 signal guess_letter_pressed(letter_id: int)
 
@@ -37,13 +37,13 @@ func set_content(content: String):
 func set_letter_state(state: String):
 	letter_state = state
 	if letter_state == 'correct':
-		modulate = Color(0, 1, 0)
+		modulate = KbButton.color_correct
 	elif letter_state == 'present':
-		modulate = Color(0, 0, 1)
+		modulate = KbButton.color_present
 	elif letter_state == 'missing':
-		modulate = Color(1, 0, 0)
+		modulate = KbButton.color_missing
 	else:
-		modulate = Color(1, 1, 1)
+		modulate = KbButton.color_base
 
 func _on_pressed():
 	print('guess_letter: Button pressed: ' + value + ' id ' + str(letter_id))
